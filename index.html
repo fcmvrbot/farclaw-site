@@ -332,15 +332,11 @@
         
         // Fetch wallet worth
         async function loadWorth() {
-            try {
-                const response = await fetch('/api/worth');
-                const data = await response.json();
-                document.getElementById('wallet-worth').textContent = `${data.totalEth} ETH`;
-                document.getElementById('wallet-breakdown').textContent = `${data.balanceEth} ETH + ${data.balanceWeth} WETH`;
-            } catch (error) {
-                document.getElementById('wallet-worth').textContent = 'Unable to load';
-                document.getElementById('wallet-breakdown').textContent = '';
-            }
+            // Hardcoded until API is fixed - update after each fee claim
+            const totalEth = "0.0105"; // 0 ETH + 0.0105 WETH (updated 2026-02-14)
+            const breakdown = "0 ETH + 0.0105 WETH";
+            document.getElementById('wallet-worth').textContent = `${totalEth} ETH`;
+            document.getElementById('wallet-breakdown').textContent = breakdown;
         }
         
         // Send payment via wallet
