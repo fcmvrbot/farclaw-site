@@ -91,7 +91,8 @@
                 <div class="text-center mb-6">
                     <p class="text-gray-400 mb-2">Or tip ETH directly</p>
                     <p class="text-white font-mono text-sm break-all">0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3</p>
-                    <p id="wallet-worth" class="text-purple-400 font-semibold mt-2">Loading worth...</p>
+                    <p id="wallet-worth" class="text-purple-400 font-semibold mt-2">Loading...</p>
+                    <p id="wallet-breakdown" class="text-gray-500 text-xs mt-1"></p>
                 </div>
                 
                 <!-- QR Code -->
@@ -334,9 +335,11 @@
             try {
                 const response = await fetch('/api/worth');
                 const data = await response.json();
-                document.getElementById('wallet-worth').textContent = `${data.balanceEth} ETH`;
+                document.getElementById('wallet-worth').textContent = `${data.totalEth} ETH`;
+                document.getElementById('wallet-breakdown').textContent = `${data.balanceEth} ETH + ${data.balanceWeth} WETH`;
             } catch (error) {
-                document.getElementById('wallet-worth').textContent = 'Worth: Unable to load';
+                document.getElementById('wallet-worth').textContent = 'Unable to load';
+                document.getElementById('wallet-breakdown').textContent = '';
             }
         }
         
