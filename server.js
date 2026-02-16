@@ -95,6 +95,40 @@ app.get('/api/worth', async (req, res) => {
   }
 });
 
+// API proxy for $CLAW price from DexScreener
+app.get('/api/claw-price', async (req, res) => {
+  try {
+    const CLAW_CA = '0xbdec370a58112ecdb04c54b2a5605a00984b5bA3';
+    const response = await fetch(
+      `https://api.dexscreener.com/latest/dex/tokens/${CLAW_CA}`,
+      { headers: { 'Accept': 'application/json' } }
+    );
+    
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Failed to fetch price' });
+    }
+    
+    const data = await response.json();
+    const pair = data.pairs?.find(p => p.chainId === 'base') || data.pairs?.[0];
+    
+    if (!pair) {
+      return res.json({ priceUsd: '0', priceEth: '0', mcap: '0', volume24h: '0' });
+    }
+    
+    res.json({
+      priceUsd: pair.priceUsd || '0',
+      priceEth: pair.priceNative || '0',
+      mcap: pair.fdv?.toString() || '0',
+      volume24h: pair.volume?.h24?.toString() || '0',
+      liquidity: pair.liquidity?.usd?.toString() || '0',
+      txns24h: (pair.txns?.h24?.buys || 0) + (pair.txns?.h24?.sells || 0)
+    });
+  } catch (error) {
+    console.error('Error fetching CLAW price:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`farclaw-site server running on port ${PORT}`);
 });
