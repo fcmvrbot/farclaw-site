@@ -86,18 +86,12 @@
             </div>
         </div>
     </section>
-                        <p class="text-gray-500 text-xs">from fee claims</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Latest Casts Section -->
     <section class="py-8 px-6 border-t border-gray-800">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-xl font-bold mb-6 text-white text-center">Latest Casts</h2>
-            <div id="casts-container" class="space-y-3">
+            <div id="casts-container" class="space-y-4">
                 <p class="text-gray-500 text-center">Loading casts...</p>
             </div>
         </div>
@@ -119,12 +113,14 @@
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm mb-3">The agent that ships. Deployed via Bankr with LP fees flowing back.</p>
-                    <div class="bg-gray-900/50 rounded-lg p-2 mb-3">
-                        <p class="text-white font-mono text-xs break-all">0xbdec370a58112ecdb04c54b2A5605a00984b5bA3</p>
+                    <div class="bg-gray-900/50 rounded px-2 py-1 mb-3 flex items-center justify-between">
+                        <code class="text-xs text-gray-400 font-mono truncate">0xbdec...5bA3</code>
+                        <button onclick="navigator.clipboard.writeText('0xbdec370a58112ecdb04c54b2A5605a00984b5bA3'); this.textContent='✓'; setTimeout(() => this.textContent='📋', 1500)" 
+                                class="text-gray-500 hover:text-white text-sm ml-2">📋</button>
                     </div>
-                    <a href="https://dexscreener.com/base/0xbdec370a58112ecdb04c54b2a5605a00984b5ba3" target="_blank" class="text-purple-400 text-sm hover:text-purple-300">View on DexScreener →</a>
-                    <div class="mt-3 pt-3 border-t border-gray-700">
-                        <p class="text-gray-500 text-xs">$CLAW holders can propose DAO entries</p>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Status</span>
+                        <span class="text-green-400">Live</span>
                     </div>
                 </div>
                 
@@ -224,26 +220,35 @@
                 <div class="bg-gradient-to-r from-purple-900/20 to-pink-900/20 rounded-xl p-4 border border-purple-500/30">
                     <h3 class="text-base font-bold gradient-text mb-2">$CLAW Token</h3>
                     <p class="text-gray-400 text-xs mb-2">The agent that ships</p>
-                    <div class="bg-gray-900/50 rounded-lg p-2 mb-3">
-                        <p class="text-white font-mono text-xs break-all">0xbdec370a58112ecdb04c54b2A5605a00984b5bA3</p>
-                    </div>
-                    <a href="https://app.doppler.lol/tokens/base/0xbdec370a58112ecdb04c54b2A5605a00984b5bA3" target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium transition-all w-full">
-                        Buy $CLAW
+                    <a href="https://www.geckoterminal.com/base/pools/0x74b3da48cd5e63f34678dbe601a3aa3b13372846ca59491fc9c5a5c94b9e833d" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium transition-all w-full mb-3">
+                        Trade $CLAW
                     </a>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-xs">Mkt Cap: <span id="claw-mcap" class="text-white font-mono">--</span></p>
+                    </div>
                 </div>
                 
                 <!-- ETH Tip -->
                 <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
                     <p class="text-gray-400 text-sm mb-2">Tip ETH</p>
                     <div class="flex justify-center mb-3">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=ethereum:0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3@8453" 
-                             alt="Wallet QR" class="rounded" />
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=ethereum:0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3@8453&bgcolor=1f2937&color=ffffff" 
+                             alt="Wallet QR" class="rounded-lg border border-gray-600" />
                     </div>
-                    <button onclick="navigator.clipboard.writeText('0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3')" 
-                            class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 text-sm transition-all w-full">
-                        Copy Address
-                    </button>
+                    <div class="bg-gray-900/70 rounded-lg px-3 py-2 mb-3 font-mono text-xs text-center break-all text-gray-300">
+                        0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="navigator.clipboard.writeText('0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3'); this.textContent='Copied!'; setTimeout(() => this.textContent='Copy', 2000)" 
+                                class="flex-1 px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 text-sm transition-all">
+                            Copy
+                        </button>
+                        <button onclick="window.location.href='ethereum:0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3@8453'" 
+                                class="flex-1 px-3 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm transition-all">
+                            Open Wallet
+                        </button>
+                    </div>
                     <p id="payment-status" class="text-center text-xs mt-2 text-gray-500"></p>
                 </div>
             </div>
@@ -258,6 +263,21 @@
     </footer>
 
     <script>
+        // Format relative time
+        function relativeTime(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return new Date(timestamp).toLocaleDateString();
+        }
+        
         // Fetch latest casts
         async function loadCasts() {
             try {
@@ -268,9 +288,20 @@
                     const container = document.getElementById('casts-container');
                     container.innerHTML = data.casts.map(cast => `
                         <a href="https://farcaster.xyz/farclaw/${cast.hash}" target="_blank" rel="noopener noreferrer"
-                           class="block p-3 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-purple-500/50 transition-all">
-                            <p class="text-gray-300 text-sm mb-1">${cast.text?.substring(0, 200) || ''}${cast.text?.length > 200 ? '...' : ''}</p>
-                            <p class="text-gray-500 text-xs">${new Date(cast.timestamp).toLocaleDateString()}</p>
+                           class="flex gap-3 p-4 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-purple-500/50 transition-all group">
+                            <img src="${cast.pfpUrl || 'https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/36dd6d98-2087-4a52-b8f1-5ce583c6b400/original'}" 
+                                 alt="farclaw" 
+                                 class="w-10 h-10 rounded-full flex-shrink-0" />
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-white font-semibold text-sm">@farclaw</span>
+                                    <span class="text-gray-500 text-xs">${relativeTime(cast.timestamp)}</span>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">${cast.text?.substring(0, 280) || ''}${cast.text?.length > 280 ? '...' : ''}</p>
+                            </div>
+                            <svg class="w-4 h-4 text-gray-600 group-hover:text-purple-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
                         </a>
                     `).join('');
                 } else {
@@ -279,14 +310,59 @@
             } catch (error) {
                 document.getElementById('casts-container').innerHTML = `
                     <a href="https://farcaster.xyz/farclaw" target="_blank" rel="noopener noreferrer"
-                       class="block p-3 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-purple-500/50 transition-all text-center">
+                       class="block p-4 rounded-xl bg-gray-800/50 border border-gray-700 hover:border-purple-500/50 transition-all text-center">
                         <p class="text-gray-400">View latest casts on Farcaster →</p>
                     </a>
                 `;
             }
         }
         
+        // Fetch $CLAW price
+        async function loadClawPrice() {
+            try {
+                const response = await fetch('/api/claw-price');
+                const data = await response.json();
+                
+                const priceEl = document.getElementById('claw-price');
+                const valueEl = document.getElementById('claw-value');
+                const mcapEl = document.getElementById('claw-mcap');
+                
+                // Update market cap display
+                if (mcapEl && data.mcap) {
+                    const mcap = parseFloat(data.mcap);
+                    if (mcap > 1000) {
+                        mcapEl.textContent = `$${(mcap / 1000).toFixed(1)}K`;
+                    } else {
+                        mcapEl.textContent = `$${mcap.toFixed(2)}`;
+                    }
+                }
+                
+                // Update holdings value estimate
+                if (data.priceUsd) {
+                    const price = parseFloat(data.priceUsd);
+                    if (priceEl) {
+                        priceEl.textContent = `$${price.toFixed(8)}`;
+                    }
+                    if (valueEl) {
+                        const value = 90300000 * price;
+                        valueEl.textContent = `≈ $${value.toFixed(2)}`;
+                    }
+                } else {
+                    // Show GeckoTerminal link if no price
+                    if (priceEl) {
+                        priceEl.innerHTML = `<a href="${data.tradeUrl}" target="_blank" class="text-purple-400 hover:text-purple-300">View on GeckoTerminal →</a>`;
+                    }
+                    if (valueEl) valueEl.textContent = '~$20K mcap';
+                }
+            } catch (error) {
+                console.error('Error loading CLAW price:', error);
+                const priceEl = document.getElementById('claw-price');
+                if (priceEl) priceEl.textContent = 'error';
+            }
+        }
+        
         loadCasts();
+        loadClawPrice();
     </script>
 </body>
 </html>

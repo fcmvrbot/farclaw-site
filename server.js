@@ -95,12 +95,13 @@ app.get('/api/worth', async (req, res) => {
   }
 });
 
-// API proxy for $CLAW price from DexScreener
+// API proxy for $CLAW price from GeckoTerminal
 app.get('/api/claw-price', async (req, res) => {
   try {
-    const CLAW_CA = '0xbdec370a58112ecdb04c54b2a5605a00984b5bA3';
+    // GeckoTerminal pool address for $CLAW
+    const POOL_ADDRESS = '0x74b3da48cd5e63f34678dbe601a3aa3b13372846ca59491fc9c5a5c94b9e833d';
     const response = await fetch(
-      `https://api.dexscreener.com/latest/dex/tokens/${CLAW_CA}`,
+      `https://api.geckoterminal.com/api/v2/networks/base/pools/${POOL_ADDRESS}`,
       { headers: { 'Accept': 'application/json' } }
     );
     
@@ -109,22 +110,45 @@ app.get('/api/claw-price', async (req, res) => {
     }
     
     const data = await response.json();
-    const pair = data.pairs?.find(p => p.chainId === 'base') || data.pairs?.[0];
-    
-    if (!pair) {
-      return res.json({ priceUsd: '0', priceEth: '0', mcap: '0', volume24h: '0' });
-    }
+    const attrs = data.data?.attributes || {};
     
     res.json({
-      priceUsd: pair.priceUsd || '0',
-      priceEth: pair.priceNative || '0',
-      mcap: pair.fdv?.toString() || '0',
-      volume24h: pair.volume?.h24?.toString() || '0',
-      liquidity: pair.liquidity?.usd?.toString() || '0',
-      txns24h: (pair.txns?.h24?.buys || 0) + (pair.txns?.h24?.sells || 0)
+      priceUsd: attrs.price_usd || null,
+      mcap: attrs.fdv_usd || null,
+      volume24h: attrs.volume_usd_h24 || null,
+      liquidity: attrs.reserve_in_usd || null,
+      txns24h: attrs.txns?.h24 ? (parseInt(attrs.txns.h24.buys || 0) + parseInt(attrs.txns.h24.sells || 0)).toString() : null,
+      source: 'geckoterminal',
+      tradeUrl: `https://www.geckoterminal.com/base/pools/${POOL_ADDRESS}`
     });
   } catch (error) {
     console.error('Error fetching CLAW price:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// API for Bankr fees data
+app.get('/api/fees', async (req, res) => {
+  try {
+    const WALLET = '0x16fd7c5b370a7c0cdfc0761bbd4ff30ade2681c3';
+    const { execSync } = await import('child_process');
+    
+    const result = execSync(
+      `bankr fees ${WALLET} --json`,
+      { encoding: 'utf-8', timeout: 15000 }
+    );
+    
+    // Parse the output - bankr outputs status lines then JSON
+    // Find the JSON object start
+    const jsonMatch = result.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      return res.status(500).json({ error: 'Failed to parse fees data' });
+    }
+    
+    const data = JSON.parse(jsonMatch[0]);
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching fees:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
